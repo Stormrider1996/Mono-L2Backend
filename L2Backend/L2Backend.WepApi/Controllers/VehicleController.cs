@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using L2Backend.Model;
+using L2Backend.Model.Common;
 using L2Backend.WepApi.Models;
 
 namespace L2Backend.WepApi.Controllers
@@ -16,12 +18,20 @@ namespace L2Backend.WepApi.Controllers
     public class VehicleController : ApiController
     {
         private VehiclesDbEntities db = new VehiclesDbEntities();
+        private IVehicle vehicle = new Vehicle();
+        private VehicleMake make = new VehicleMake();
+        private VehicleModel model = new VehicleModel();
 
         // GET: api/VehicleMakes
         [Route("api/AllMakes")]
-        public IQueryable<VehicleMake> GetVehicleMakes()
+        public HttpResponseMessage GetVehicleMakes()
         {
-            return db.VehicleMakes;
+           make.Name = db.VehicleMakes.FirstOrDefault().Name;
+           model.Name = db.VehicleModels.FirstOrDefault().Name;
+           
+           vehicle.VehicleMake = make.Name;
+           vehicle.VehicleModel = model.Name;
+           return Request.CreateResponse(HttpStatusCode.OK, vehicle);
         }
 
         // GET: api/VehicleMakes/5
