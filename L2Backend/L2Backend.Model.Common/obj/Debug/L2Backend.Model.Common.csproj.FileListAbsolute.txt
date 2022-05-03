@@ -1,0 +1,6 @@
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Model.Common\bin\Debug\L2Backend.Model.Common.dll
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Model.Common\bin\Debug\L2Backend.Model.Common.pdb
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Model.Common\obj\Debug\L2Backend.Model.Common.csproj.AssemblyReference.cache
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Model.Common\obj\Debug\L2Backend.Model.Common.csproj.CoreCompileInputs.cache
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Model.Common\obj\Debug\L2Backend.Model.Common.dll
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Model.Common\obj\Debug\L2Backend.Model.Common.pdb

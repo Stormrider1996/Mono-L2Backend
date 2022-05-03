@@ -1,0 +1,12 @@
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\bin\Debug\L2Backend.Service.Common.dll.config
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\bin\Debug\L2Backend.Service.Common.dll
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\bin\Debug\L2Backend.Service.Common.pdb
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\bin\Debug\EntityFramework.dll
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\bin\Debug\EntityFramework.xml
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\obj\Debug\L2Backend.Service.Common.csproj.AssemblyReference.cache
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\obj\Debug\L2Backend.Service.Common.csproj.CoreCompileInputs.cache
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\obj\Debug\L2Backend.Service.Common.csproj.CopyComplete
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\obj\Debug\L2Backend.Service.Common.dll
+C:\Users\franj\Desktop\Mono\L2Backend\L2Backend.Service.Common\obj\Debug\L2Backend.Service.Common.pdb

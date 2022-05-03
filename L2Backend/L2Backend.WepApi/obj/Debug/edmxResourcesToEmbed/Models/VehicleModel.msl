@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VehiclesDbModelStoreContainer" CdmEntityContainer="VehiclesDbEntities">
+    <EntitySetMapping Name="VehicleMakes">
+      <EntityTypeMapping TypeName="VehiclesDbModel.VehicleMake">
+        <MappingFragment StoreEntitySet="VehicleMake">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Abrv" ColumnName="Abrv" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VehicleModels">
+      <EntityTypeMapping TypeName="VehiclesDbModel.VehicleModel">
+        <MappingFragment StoreEntitySet="VehicleModel">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MakeId" ColumnName="MakeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

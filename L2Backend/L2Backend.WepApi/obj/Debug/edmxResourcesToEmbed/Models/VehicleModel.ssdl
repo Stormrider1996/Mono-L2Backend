@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VehiclesDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="VehicleMake">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="Abrv" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="VehicleModel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="MakeId" Type="uniqueidentifier" />
+  </EntityType>
+  <Association Name="FK__VehicleMo__MakeI__38996AB5">
+    <End Role="VehicleMake" Type="Self.VehicleMake" Multiplicity="0..1" />
+    <End Role="VehicleModel" Type="Self.VehicleModel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VehicleMake">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="VehicleModel">
+        <PropertyRef Name="MakeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VehiclesDbModelStoreContainer">
+    <EntitySet Name="VehicleMake" EntityType="Self.VehicleMake" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VehicleModel" EntityType="Self.VehicleModel" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__VehicleMo__MakeI__38996AB5" Association="Self.FK__VehicleMo__MakeI__38996AB5">
+      <End Role="VehicleMake" EntitySet="VehicleMake" />
+      <End Role="VehicleModel" EntitySet="VehicleModel" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
