@@ -102,3 +102,5 @@ C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\System.Numerics.Vect
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\EntityFramework.xml
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\EntityFramework.SqlServer.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\EntityFramework.SqlServer.xml
