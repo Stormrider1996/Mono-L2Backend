@@ -1,19 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace VehicleCRUD.Service
 {
     public interface IVehicleService
     {
-        Task DeleteMakeByNameAsync(string name);
-        Task DeleteModelByNameAsync(string name);
-        Task<VehicleMake> GetVehicleMakeByNameAsync(string name);
+        Task DeleteMakeByIdAsync(Guid id);
+        Task DeleteModelByIdAsync(Guid id);
+        Task<VehicleMake> GetVehicleMakeByIdAsync(Guid? id);
         Task<List<VehicleMake>> GetVehicleMakeListAsync();
-        Task<VehicleModel> GetVehicleModelByNameAsync(string name);
+        Task<VehicleModel> GetVehicleModelByIdAsync(Guid? id);
         Task<List<VehicleModel>> GetVehicleModelListAsync();
         Task InsertVehicleMakeAsync(VehicleMake make);
         Task InsertVehicleModelAsync(VehicleModel model);
-        Task UpdateVehicleMakeAsync(VehicleMake make, string newMakeName, string newAbrv);
-        Task UpdateVehicleModelAsync(VehicleModel model, string newModelName, string newAbrv);
+        Task UpdateVehicleMakeAsync(VehicleMake make);
+        Task UpdateVehicleModelAsync(VehicleModel model);
     }
 }

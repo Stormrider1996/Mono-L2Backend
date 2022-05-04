@@ -16,9 +16,9 @@ namespace VehicleCRUD.Service
             Context = context;
         }
 
-        public async Task<VehicleMake> GetVehicleMakeByNameAsync(string name)
+        public async Task<VehicleMake> GetVehicleMakeByIdAsync(Guid? id)
         {
-            return await Context.VehicleMakes.FirstOrDefaultAsync(x => x.Name == name);
+            return await Context.VehicleMakes.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<VehicleMake>> GetVehicleMakeListAsync()
@@ -32,26 +32,33 @@ namespace VehicleCRUD.Service
             await Context.SaveChangesAsync();
         }
 
-        public async Task UpdateVehicleMakeAsync(VehicleMake make, string newMakeName, string newAbrv)
+        public async Task UpdateVehicleMakeAsync(VehicleMake make)
         {
-            var fetchedName = await Context.VehicleMakes.FirstOrDefaultAsync(x => x.Name == make.Name);
-            fetchedName.Name = newMakeName;
-
-            var fetchedAbrv = await Context.VehicleMakes.FirstOrDefaultAsync(x => x.Abrv == make.Abrv);
-            fetchedAbrv.Abrv = newAbrv;
+            var entity = await Context.VehicleMakes.FindAsync(make.Id);
+            if (entity != null)
+            {
+                entity.Name = make.Name;
+                entity.Abrv = make.Abrv;
+                Context.SaveChanges();
+            }
 
         }
 
-        public async Task DeleteMakeByNameAsync(string name)
+        public async Task DeleteMakeByIdAsync(Guid id)
         {
-            var vehicleMake = await Context.VehicleMakes.FindAsync(name);
+            var vehicleMake = await Context.VehicleMakes.FindAsync(id);
+            var vehicleModel = await Context.VehicleModels.FirstOrDefaultAsync(x => x.MakeId == id);
+            if (vehicleModel != null)
+            {
+                Context.VehicleModels.Remove(vehicleModel);
+            }
             Context.VehicleMakes.Remove(vehicleMake);
             await Context.SaveChangesAsync();
         }
 
-        public async Task<VehicleModel> GetVehicleModelByNameAsync(string name)
+        public async Task<VehicleModel> GetVehicleModelByIdAsync(Guid? id)
         {
-            return await Context.VehicleModels.FirstOrDefaultAsync(x => x.Name == name);
+            return await Context.VehicleModels.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<VehicleModel>> GetVehicleModelListAsync()
@@ -65,19 +72,21 @@ namespace VehicleCRUD.Service
             await Context.SaveChangesAsync();
         }
 
-        public async Task UpdateVehicleModelAsync(VehicleModel model, string newModelName, string newAbrv)
+        public async Task UpdateVehicleModelAsync(VehicleModel model)
         {
-            var fetchedName = await Context.VehicleModels.FirstOrDefaultAsync(x => x.Name == model.Name);
-            fetchedName.Name = newModelName;
-
-            var fetchedAbrv = await Context.VehicleModels.FirstOrDefaultAsync(x => x.Abrv == model.Abrv);
-            fetchedAbrv.Abrv = newAbrv;
+            var entity = await Context.VehicleMakes.FindAsync(model.Id);
+            if (entity != null)
+            {
+                entity.Name = model.Name;
+                entity.Abrv = model.Abrv;
+                Context.SaveChanges();
+            }
 
         }
 
-        public async Task DeleteModelByNameAsync(string name)
+        public async Task DeleteModelByIdAsync(Guid id)
         {
-            var vehicleModel = await Context.VehicleModels.FindAsync(name);
+            var vehicleModel = await Context.VehicleModels.FindAsync(id);
             Context.VehicleModels.Remove(vehicleModel);
             await Context.SaveChangesAsync();
         }

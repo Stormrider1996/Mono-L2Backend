@@ -30,13 +30,13 @@ namespace VehicleCRUD.MVC.Controllers
         }
 
         // GET: VehicleMakes/Details/5
-        public async Task<ActionResult> Details(string name)
+        public async Task<ActionResult> Details(Guid? id)
         {
-            if (name == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = await VehicleService.GetVehicleMakeByNameAsync(name);
+            VehicleMake vehicleMake = await VehicleService.GetVehicleMakeByIdAsync(id);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -86,9 +86,9 @@ namespace VehicleCRUD.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(string name, string abrv, [Bind(Include = "Id,Name,Abrv")] VehicleMake vehicleMake)
+        public async Task<ActionResult> Edit(Guid id, [Bind(Include = "Id,Name,Abrv")] VehicleMake vehicleMake)
         {
-            if (name != vehicleMake.Name) 
+            if (id != vehicleMake.Id) 
             {
                 return HttpNotFound();
             }
@@ -96,11 +96,11 @@ namespace VehicleCRUD.MVC.Controllers
             {
                 try
                 {
-                    await VehicleService.UpdateVehicleMakeAsync(vehicleMake, name, abrv);
+                    await VehicleService.UpdateVehicleMakeAsync(vehicleMake);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VehicleMakeExists(vehicleMake.Name))
+                    if (!VehicleMakeExists(vehicleMake.Id))
                     {
                         return HttpNotFound();
                     }
@@ -116,13 +116,13 @@ namespace VehicleCRUD.MVC.Controllers
         }
 
         // GET: VehicleMakes/Delete/5
-        public async Task<ActionResult> Delete(string name)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            if (name == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = await VehicleService.GetVehicleMakeByNameAsync(name);
+            VehicleMake vehicleMake = await VehicleService.GetVehicleMakeByIdAsync(id);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -133,15 +133,15 @@ namespace VehicleCRUD.MVC.Controllers
         // POST: VehicleMakes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string name)
+        public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
-            await VehicleService.DeleteMakeByNameAsync(name);
+            await VehicleService.DeleteMakeByIdAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VehicleMakeExists(string name)
+        private bool VehicleMakeExists(Guid id)
         {
-            return Context.VehicleMakes.Any(e => e.Name == name);
+            return Context.VehicleMakes.Any(e => e.Id == id);
         }
     }
 }

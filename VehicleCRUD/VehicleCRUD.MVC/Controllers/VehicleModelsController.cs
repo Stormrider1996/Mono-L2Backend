@@ -8,18 +8,26 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using VehicleCRUD.Service;
+using System.Data.Entity.Infrastructure;
 
 namespace VehicleCRUD.MVC.Controllers
 {
     public class VehicleModelsController : Controller
     {
-        private VehiclesDbEntities db = new VehiclesDbEntities();
+        private readonly VehiclesDbEntities Context;
+        private readonly IVehicleService VehicleService;
+
+        public VehicleModelsController(VehiclesDbEntities context, IVehicleService vehicleService)
+        {
+            Context = context;
+            VehicleService = vehicleService;   
+        }
 
         // GET: VehicleModels
         public async Task<ActionResult> Index()
         {
-            var vehicleModels = db.VehicleModels.Include(v => v.VehicleMake);
-            return View(await vehicleModels.ToListAsync());
+            var vehicleModels = Context.VehicleModels.Include(v => v.VehicleMake);
+            return View(await VehicleService.GetVehicleModelListAsync());
         }
 
         // GET: VehicleModels/Details/5
@@ -29,7 +37,7 @@ namespace VehicleCRUD.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleModel vehicleModel = await db.VehicleModels.FindAsync(id);
+            VehicleModel vehicleModel = await VehicleService.GetVehicleModelByIdAsync(id);
             if (vehicleModel == null)
             {
                 return HttpNotFound();
@@ -40,7 +48,7 @@ namespace VehicleCRUD.MVC.Controllers
         // GET: VehicleModels/Create
         public ActionResult Create()
         {
-            ViewBag.MakeId = new SelectList(db.VehicleMakes, "Id", "Name");
+            ViewBag.MakeId = new SelectList(Context.VehicleMakes, "Id", "Name");
             return View();
         }
 
@@ -53,13 +61,11 @@ namespace VehicleCRUD.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                vehicleModel.Id = Guid.NewGuid();
-                db.VehicleModels.Add(vehicleModel);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                await VehicleService.InsertVehicleModelAsync(vehicleModel);
+                return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.MakeId = new SelectList(db.VehicleMakes, "Id", "Name", vehicleModel.MakeId);
+            ViewBag.MakeId = new SelectList(Context.VehicleMakes, "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 
@@ -70,12 +76,12 @@ namespace VehicleCRUD.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleModel vehicleModel = await db.VehicleModels.FindAsync(id);
+            VehicleModel vehicleModel = await Context.VehicleModels.FindAsync(id);
             if (vehicleModel == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.MakeId = new SelectList(db.VehicleMakes, "Id", "Name", vehicleModel.MakeId);
+            ViewBag.MakeId = new SelectList(Context.VehicleMakes, "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 
@@ -84,15 +90,34 @@ namespace VehicleCRUD.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Abrv,MakeId")] VehicleModel vehicleModel)
+        public async Task<ActionResult> Edit(Guid id, [Bind(Include = "Id,Name,Abrv,MakeId")] VehicleModel vehicleModel)
         {
+            if (id != vehicleModel.Id)
+            {
+                return HttpNotFound();
+            }
             if (ModelState.IsValid)
             {
-                db.Entry(vehicleModel).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                try
+                {
+                    await VehicleService.UpdateVehicleModelAsync(vehicleModel);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if(!VehicleModelExists(vehicleModel.Id))
+                    {
+                        return HttpNotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                    
+                }
+                return RedirectToAction(nameof(Index));
             }
-            ViewBag.MakeId = new SelectList(db.VehicleMakes, "Id", "Name", vehicleModel.MakeId);
+
+            ViewBag.MakeId = new SelectList(Context.VehicleMakes, "Id", "Name", vehicleModel.MakeId);
             return View(vehicleModel);
         }
 
@@ -103,7 +128,7 @@ namespace VehicleCRUD.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleModel vehicleModel = await db.VehicleModels.FindAsync(id);
+            VehicleModel vehicleModel = await VehicleService.GetVehicleModelByIdAsync(id);
             if (vehicleModel == null)
             {
                 return HttpNotFound();
@@ -116,19 +141,13 @@ namespace VehicleCRUD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
-            VehicleModel vehicleModel = await db.VehicleModels.FindAsync(id);
-            db.VehicleModels.Remove(vehicleModel);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            await VehicleService.DeleteModelByIdAsync(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        protected override void Dispose(bool disposing)
+        private bool VehicleModelExists(Guid id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return Context.VehicleModels.Any(e => e.Id == id);
         }
     }
 }
