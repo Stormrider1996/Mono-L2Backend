@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace VehicleCRUD.Service
 {
-    public class VehicleService : IVehicleService
+    public class VehicleMakeService : IVehicleMakeService
     {
         private readonly VehiclesDbEntities Context;
 
-        public VehicleService(VehiclesDbEntities context)
+        public VehicleMakeService(VehiclesDbEntities context)
         {
             Context = context;
         }
@@ -28,7 +28,13 @@ namespace VehicleCRUD.Service
 
         public async Task InsertVehicleMakeAsync(VehicleMake make)
         {
-            Context.VehicleMakes.Add(make);
+            var entity = new VehicleMake
+            {
+                Id = Guid.NewGuid(),
+                Name = make.Name,
+                Abrv = make.Abrv,
+            };
+            Context.VehicleMakes.Add(entity);
             await Context.SaveChangesAsync();
         }
 
@@ -56,42 +62,10 @@ namespace VehicleCRUD.Service
             await Context.SaveChangesAsync();
         }
 
-        public async Task<VehicleModel> GetVehicleModelByIdAsync(Guid? id)
+        public bool VehicleMakeExists(Guid id)
         {
-            return await Context.VehicleModels.FirstOrDefaultAsync(x => x.Id == id);
+            return Context.VehicleMakes.Any(e => e.Id == id);
         }
-
-        public async Task<List<VehicleModel>> GetVehicleModelListAsync()
-        {
-            return await Context.VehicleModels.ToListAsync();
-        }
-
-        public async Task InsertVehicleModelAsync(VehicleModel model)
-        {
-            Context.VehicleModels.Add(model);
-            await Context.SaveChangesAsync();
-        }
-
-        public async Task UpdateVehicleModelAsync(VehicleModel model)
-        {
-            var entity = await Context.VehicleMakes.FindAsync(model.Id);
-            if (entity != null)
-            {
-                entity.Name = model.Name;
-                entity.Abrv = model.Abrv;
-                Context.SaveChanges();
-            }
-
-        }
-
-        public async Task DeleteModelByIdAsync(Guid id)
-        {
-            var vehicleModel = await Context.VehicleModels.FindAsync(id);
-            Context.VehicleModels.Remove(vehicleModel);
-            await Context.SaveChangesAsync();
-        }
-
-
 
     }
 }

@@ -14,29 +14,27 @@ namespace VehicleCRUD.MVC.Controllers
 {
     public class VehicleMakesController : Controller
     {
-        private readonly VehiclesDbEntities Context;
-        private readonly IVehicleService VehicleService;
+        private readonly IVehicleMakeService VehicleMakeService;
 
-        public VehicleMakesController(VehiclesDbEntities context, IVehicleService vehicleService)
+        public VehicleMakesController(IVehicleMakeService vehicleMakeService)
         {
-            Context = context;
-            VehicleService = vehicleService;  
+            VehicleMakeService = vehicleMakeService;  
         }
         
         // GET: VehicleMakes
         public async Task<ActionResult> Index()
         {
-            return View(await VehicleService.GetVehicleMakeListAsync());
+            return View(await VehicleMakeService.GetVehicleMakeListAsync());
         }
 
         // GET: VehicleMakes/Details/5
-        public async Task<ActionResult> Details(Guid? id)
+        public async Task<ActionResult> Details(Guid id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = await VehicleService.GetVehicleMakeByIdAsync(id);
+            VehicleMake vehicleMake = await VehicleMakeService.GetVehicleMakeByIdAsync(id);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -59,7 +57,7 @@ namespace VehicleCRUD.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-               await VehicleService.InsertVehicleMakeAsync(vehicleMake);
+               await VehicleMakeService.InsertVehicleMakeAsync(vehicleMake);
                return RedirectToAction(nameof(Index));
             }
 
@@ -67,13 +65,13 @@ namespace VehicleCRUD.MVC.Controllers
         }
 
         // GET: VehicleMakes/Edit/5
-        public async Task<ActionResult> Edit(Guid? id)
+        public async Task<ActionResult> Edit(Guid id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = await Context.VehicleMakes.FindAsync(id);
+            VehicleMake vehicleMake = await VehicleMakeService.GetVehicleMakeByIdAsync((Guid)id);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -96,11 +94,11 @@ namespace VehicleCRUD.MVC.Controllers
             {
                 try
                 {
-                    await VehicleService.UpdateVehicleMakeAsync(vehicleMake);
+                    await VehicleMakeService.UpdateVehicleMakeAsync(vehicleMake);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VehicleMakeExists(vehicleMake.Id))
+                    if (!VehicleMakeService.VehicleMakeExists(vehicleMake.Id))
                     {
                         return HttpNotFound();
                     }
@@ -122,7 +120,7 @@ namespace VehicleCRUD.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = await VehicleService.GetVehicleMakeByIdAsync(id);
+            VehicleMake vehicleMake = await VehicleMakeService.GetVehicleMakeByIdAsync(id);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -135,13 +133,10 @@ namespace VehicleCRUD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
-            await VehicleService.DeleteMakeByIdAsync(id);
+            await VehicleMakeService.DeleteMakeByIdAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VehicleMakeExists(Guid id)
-        {
-            return Context.VehicleMakes.Any(e => e.Id == id);
-        }
+       
     }
 }

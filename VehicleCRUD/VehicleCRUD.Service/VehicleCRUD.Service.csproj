@@ -78,10 +78,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IVehicleService.cs" />
+    <Compile Include="IVehicleMakeService.cs" />
+    <Compile Include="IVehicleModelService.cs" />
     <Compile Include="VehicleMake.cs">
       <DependentUpon>VehicleModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="VehicleMakeService.cs" />
     <Compile Include="VehicleModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,12 +97,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VehicleModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="VehicleModel1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VehicleModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VehicleService.cs" />
+    <Compile Include="VehicleModelService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@ namespace VehicleCRUD.Service
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public string Abrv { get; set; }
-        public Nullable<System.Guid> MakeId { get; set; }
+        public System.Guid MakeId { get; set; }
     
         public virtual VehicleMake VehicleMake { get; set; }
     }

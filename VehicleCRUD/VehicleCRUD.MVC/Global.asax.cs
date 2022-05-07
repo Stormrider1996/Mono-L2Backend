@@ -24,7 +24,8 @@ namespace VehicleCRUD.MVC
             builder.RegisterType<VehicleMake>().AsSelf();
             builder.RegisterType<VehicleModel>().AsSelf();
 
-            builder.RegisterType<VehicleService>().As<IVehicleService>();
+            builder.RegisterType<VehicleMakeService>().As<IVehicleMakeService>();
+            builder.RegisterType<VehicleModelService>().As<IVehicleModelService>();
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
