@@ -27,3 +27,7 @@ C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.Service\bin\Debug\System.Mem
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.Service\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.Service\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.Service\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.Service\bin\Debug\PagedList.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.Service\bin\Debug\PagedList.Mvc.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.Service\bin\Debug\PagedList.xml
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.Service\bin\Debug\PagedList.Mvc.xml

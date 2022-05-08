@@ -104,3 +104,7 @@ C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\System.Threading.Tas
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\EntityFramework.xml
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\EntityFramework.SqlServer.dll
 C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\EntityFramework.SqlServer.xml
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\PagedList.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\PagedList.Mvc.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\PagedList.xml
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\PagedList.Mvc.xml

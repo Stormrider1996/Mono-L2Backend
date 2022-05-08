@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PagedList;
 
 namespace VehicleCRUD.Service
 {
@@ -16,7 +17,7 @@ namespace VehicleCRUD.Service
             Context = context;
         }
 
-        public async Task<VehicleMake> GetVehicleMakeByIdAsync(Guid? id)
+        public async Task<VehicleMake> GetVehicleMakeByIdAsync(Guid id)
         {
             return await Context.VehicleMakes.FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -53,11 +54,7 @@ namespace VehicleCRUD.Service
         public async Task DeleteMakeByIdAsync(Guid id)
         {
             var vehicleMake = await Context.VehicleMakes.FindAsync(id);
-            var vehicleModel = await Context.VehicleModels.FirstOrDefaultAsync(x => x.MakeId == id);
-            if (vehicleModel != null)
-            {
-                Context.VehicleModels.Remove(vehicleModel);
-            }
+            Context.VehicleModels.RemoveRange(Context.VehicleModels.Where(x => x.MakeId == id));
             Context.VehicleMakes.Remove(vehicleMake);
             await Context.SaveChangesAsync();
         }
@@ -67,5 +64,38 @@ namespace VehicleCRUD.Service
             return Context.VehicleMakes.Any(e => e.Id == id);
         }
 
+        public IPagedList SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page)
+        {
+            var vehicleMakes = from v in Context.VehicleMakes select v;
+            
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                vehicleMakes = vehicleMakes.Where(v => v.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    vehicleMakes = vehicleMakes.OrderByDescending(v => v.Name);
+                    break;
+                default:
+                    vehicleMakes = vehicleMakes.OrderBy(v => v.Name);
+                    break;
+            }
+            
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return vehicleMakes.ToPagedList(pageNumber, pageSize);
+        }
+    
     }
 }

@@ -12,19 +12,19 @@ namespace VehicleCRUD.Service
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
-    public partial class VehiclesDbEntities : DbContext
+
+    public partial class VehiclesDbEntities : DbContext, IVehiclesDbEntities
     {
         public VehiclesDbEntities()
             : base("name=VehiclesDbEntities")
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<VehicleMake> VehicleMakes { get; set; }
         public virtual DbSet<VehicleModel> VehicleModels { get; set; }
     }

@@ -46,6 +46,12 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -78,12 +84,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IVehicleMakeService.cs" />
-    <Compile Include="IVehicleModelService.cs" />
+    <Compile Include="Interfaces for Efmodel\IVehicleMake.cs" />
+    <Compile Include="Interfaces for Efmodel\IVehicleModel.cs" />
+    <Compile Include="Interfaces for Efmodel\IVehiclesDbEntities.cs" />
+    <Compile Include="VehicleService classes\IVehicleMakeService.cs" />
+    <Compile Include="VehicleService classes\IVehicleModelService.cs" />
     <Compile Include="VehicleMake.cs">
       <DependentUpon>VehicleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="VehicleMakeService.cs" />
+    <Compile Include="VehicleService classes\VehicleMakeService.cs" />
     <Compile Include="VehicleModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -97,7 +106,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VehicleModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="VehicleModelService.cs" />
+    <Compile Include="VehicleService classes\VehicleModelService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +124,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\PagedList.css" />
     <Content Include="VehicleModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>VehicleModel.edmx</DependentUpon>

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using VehicleCRUD.Service;
 using System.Data.Entity.Infrastructure;
+using PagedList;
 
 namespace VehicleCRUD.MVC.Controllers
 {
@@ -22,9 +23,14 @@ namespace VehicleCRUD.MVC.Controllers
         }
         
         // GET: VehicleMakes
-        public async Task<ActionResult> Index()
+        public ViewResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            return View(await VehicleMakeService.GetVehicleMakeListAsync());
+            var vehicleMakes = VehicleMakeService.SortingFilteringPaging(sortOrder, searchString, currentFilter, page);
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CurrentFilter = searchString;
+           
+            return View(vehicleMakes);
         }
 
         // GET: VehicleMakes/Details/5

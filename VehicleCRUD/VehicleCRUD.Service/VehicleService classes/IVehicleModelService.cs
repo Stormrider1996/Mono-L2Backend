@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace VehicleCRUD.Service
@@ -12,5 +14,6 @@ namespace VehicleCRUD.Service
         Task InsertVehicleModelAsync(VehicleModel model);
         Task UpdateVehicleModelAsync(VehicleModel model);
         bool VehicleModelExists(Guid id);
+        IPagedList SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page);
     }
 }

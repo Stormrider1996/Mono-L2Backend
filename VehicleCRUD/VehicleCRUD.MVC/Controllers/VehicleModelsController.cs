@@ -23,9 +23,14 @@ namespace VehicleCRUD.MVC.Controllers
         }
 
         // GET: VehicleModels
-        public async Task<ActionResult> Index()
+        public ViewResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            return View(await VehicleModelService.GetVehicleModelListAsync());
+            var vehicleModels = VehicleModelService.SortingFilteringPaging(sortOrder, searchString, currentFilter, page);
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CurrentFilter = searchString;
+
+            return View(vehicleModels);
         }
 
         // GET: VehicleModels/Details/5

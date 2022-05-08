@@ -11,14 +11,14 @@ namespace VehicleCRUD.Service
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class VehicleModel
+
+    public partial class VehicleModel : IVehicleModel
     {
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public string Abrv { get; set; }
         public System.Guid MakeId { get; set; }
-    
+
         public virtual VehicleMake VehicleMake { get; set; }
     }
 }

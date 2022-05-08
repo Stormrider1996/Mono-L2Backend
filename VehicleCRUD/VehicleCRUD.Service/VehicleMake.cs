@@ -11,19 +11,19 @@ namespace VehicleCRUD.Service
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class VehicleMake
+
+    public partial class VehicleMake : IVehicleMake
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public VehicleMake()
         {
             this.VehicleModels = new HashSet<VehicleModel>();
         }
-    
+
         public System.Guid Id { get; set; }
         public string Name { get; set; }
         public string Abrv { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VehicleModel> VehicleModels { get; set; }
     }

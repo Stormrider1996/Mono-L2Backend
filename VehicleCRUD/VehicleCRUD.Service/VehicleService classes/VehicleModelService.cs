@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -60,6 +61,38 @@ namespace VehicleCRUD.Service
         public bool VehicleModelExists(Guid id)
         {
             return Context.VehicleModels.Any(e => e.Id == id);
+        }
+        public IPagedList SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page)
+        {
+            var vehicleModels = from v in Context.VehicleModels select v;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                vehicleModels = vehicleModels.Where(v => v.VehicleMake.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    vehicleModels = vehicleModels.OrderByDescending(v => v.Name);
+                    break;
+                default:
+                    vehicleModels = vehicleModels.OrderBy(v => v.Name);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return vehicleModels.ToPagedList(pageNumber, pageSize);
         }
 
     }
