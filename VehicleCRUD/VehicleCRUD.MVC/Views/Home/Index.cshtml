@@ -1,13 +1,31 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<VehicleCRUD.MVC.ViewModels.VehicleMakeAndModelCount>
+
+@{
+    ViewBag.Title = "VehicleCRUD";
 }
 
-<div class="jumbotron">
-    <h1>VehicleCRUD</h1>
-</div>
+<h2>Vehicle make and model count</h2>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Please be gentle !</h2>
-    </div>
-</div>
+<table>
+    <tr>
+        <th style="padding: 15px">
+            Vehicle make count
+        </th>
+        <th>
+            Vehicle model count
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align:center">
+                @item.VehicleMakeCount
+            </td>
+            
+            <td style="text-align:center">
+                @item.VehicleModelCount
+            </td>
+        </tr>
+    }
+</table>
