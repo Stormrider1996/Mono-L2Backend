@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using PagedList;
 
 namespace VehicleCRUD.Service
@@ -95,7 +96,10 @@ namespace VehicleCRUD.Service
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return vehicleMakes.ToPagedList(pageNumber, pageSize);
+            
         }
     
+       
     }
+    
 }

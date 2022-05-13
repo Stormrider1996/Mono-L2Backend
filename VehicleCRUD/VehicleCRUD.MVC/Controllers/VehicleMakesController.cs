@@ -10,16 +10,22 @@ using System.Web.Mvc;
 using VehicleCRUD.Service;
 using System.Data.Entity.Infrastructure;
 using PagedList;
+using AutoMapper;
+using VehicleCRUD.MVC.ViewModels;
+
 
 namespace VehicleCRUD.MVC.Controllers
 {
     public class VehicleMakesController : Controller
     {
         private readonly IVehicleMakeService VehicleMakeService;
-
-        public VehicleMakesController(IVehicleMakeService vehicleMakeService)
+        private readonly IMapper _mapper;
+        
+        public VehicleMakesController(IVehicleMakeService vehicleMakeService, IMapper mapper)
         {
             VehicleMakeService = vehicleMakeService;  
+            _mapper = mapper;
+            
         }
         
         // GET: VehicleMakes
@@ -29,8 +35,10 @@ namespace VehicleCRUD.MVC.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.CurrentFilter = searchString;
-           
-            return View(vehicleMakes);
+
+            var model = vehicleMakes.ToMappedPagedList<VehicleMake, VehicleMakeViewModel>();
+
+            return View(model);
         }
 
         // GET: VehicleMakes/Details/5
@@ -41,11 +49,12 @@ namespace VehicleCRUD.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             VehicleMake vehicleMake = await VehicleMakeService.GetVehicleMakeByIdAsync(id);
+            var model = Mapper.Map<VehicleMakeViewModel>(vehicleMake);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
             }
-            return View(vehicleMake);
+            return View(model);
         }
 
         // GET: VehicleMakes/Create
@@ -61,6 +70,7 @@ namespace VehicleCRUD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Name,Abrv")] VehicleMake vehicleMake)
         {
+           
             if (ModelState.IsValid)
             {
                await VehicleMakeService.InsertVehicleMakeAsync(vehicleMake);
@@ -78,6 +88,7 @@ namespace VehicleCRUD.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             VehicleMake vehicleMake = await VehicleMakeService.GetVehicleMakeByIdAsync((Guid)id);
+            
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -92,6 +103,7 @@ namespace VehicleCRUD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Guid id, [Bind(Include = "Id,Name,Abrv")] VehicleMake vehicleMake)
         {
+            
             if (id != vehicleMake.Id) 
             {
                 return HttpNotFound();
@@ -127,6 +139,7 @@ namespace VehicleCRUD.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             VehicleMake vehicleMake = await VehicleMakeService.GetVehicleMakeByIdAsync(id);
+            
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -144,5 +157,15 @@ namespace VehicleCRUD.MVC.Controllers
         }
 
        
+    }
+    static class Extensions
+    {
+        public static IPagedList<TDestination> ToMappedPagedList<TSource, TDestination>(this IPagedList<TSource> list)
+        {
+            IEnumerable<TDestination> sourceList = Mapper.Map<IEnumerable<TSource>, IEnumerable<TDestination>>(list);
+            IPagedList<TDestination> pagedResult = new StaticPagedList<TDestination>(sourceList, list.GetMetaData());
+            return pagedResult;
+
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VehicleCRUD.MVC.ViewModels
 {
-    public class VehicleMakeAndModelCount
+    public class VehicleMakeAndModelCount 
     {
         public int VehicleMakeCount { get; set; }
         public int VehicleModelCount { get; set; }

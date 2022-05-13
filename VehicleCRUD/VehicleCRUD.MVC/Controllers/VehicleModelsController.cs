@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Mvc;
 using VehicleCRUD.Service;
 using System.Data.Entity.Infrastructure;
+using AutoMapper;
+using VehicleCRUD.MVC.ViewModels;
+using PagedList;
 
 namespace VehicleCRUD.MVC.Controllers
 {
@@ -16,10 +19,12 @@ namespace VehicleCRUD.MVC.Controllers
     {
         private readonly IVehicleModelService VehicleModelService;
         private readonly IVehicleMakeService VehicleMakeService;
-        public VehicleModelsController(IVehicleModelService vehicleModelService, IVehicleMakeService vehicleMakeService)
+        private readonly IMapper Mapper;
+        public VehicleModelsController(IVehicleModelService vehicleModelService, IVehicleMakeService vehicleMakeService, IMapper mapper)
         {
             VehicleModelService = vehicleModelService;
             VehicleMakeService = vehicleMakeService;    
+            Mapper = mapper;
         }
 
         // GET: VehicleModels
@@ -29,8 +34,8 @@ namespace VehicleCRUD.MVC.Controllers
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.CurrentFilter = searchString;
-
-            return View(vehicleModels);
+            var model = Mapper.Map<PagedList<VehicleModelViewModel>>(vehicleModels);
+            return View(model);
         }
 
         // GET: VehicleModels/Details/5
@@ -41,11 +46,12 @@ namespace VehicleCRUD.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             VehicleModel vehicleModel = await VehicleModelService.GetVehicleModelByIdAsync(id);
+            var model = Mapper.Map<VehicleModelViewModel>(vehicleModel);
             if (vehicleModel == null)
             {
                 return HttpNotFound();
             }
-            return View(vehicleModel);
+            return View(model);
         }
 
         // GET: VehicleModels/Create
@@ -71,6 +77,7 @@ namespace VehicleCRUD.MVC.Controllers
 
             List<VehicleMake> vehicleMakes = await VehicleMakeService.GetVehicleMakeListAsync();
             ViewBag.MakeId = new SelectList(vehicleMakes, "Id", "Name");
+            
             return View(vehicleModel);
         }
 
@@ -82,6 +89,7 @@ namespace VehicleCRUD.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             VehicleModel vehicleModel = await VehicleModelService.GetVehicleModelByIdAsync(id);
+            
             if (vehicleModel == null)
             {
                 return HttpNotFound();
@@ -124,6 +132,7 @@ namespace VehicleCRUD.MVC.Controllers
             }
 
             List<VehicleMake> vehicleMakes = await VehicleMakeService.GetVehicleMakeListAsync();
+ 
             ViewBag.MakeId = new SelectList(vehicleMakes, "Id", "Name");
             return View(vehicleModel);
         }

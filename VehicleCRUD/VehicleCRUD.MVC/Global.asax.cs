@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using AutoMapper;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using VehicleCRUD.MVC.ViewModels;
 using VehicleCRUD.Service;
 
 namespace VehicleCRUD.MVC
@@ -17,15 +20,37 @@ namespace VehicleCRUD.MVC
         protected void Application_Start()
         {
             var builder = new ContainerBuilder();
-
+       
+            
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
             builder.RegisterType<VehiclesDbEntities>().AsSelf();
             builder.RegisterType<VehicleMake>().AsSelf();
             builder.RegisterType<VehicleModel>().AsSelf();
+           
+
+            builder.Register(context => new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap <VehicleMake, VehicleMakeViewModel>();
+                cfg.CreateMap<VehicleModel, VehicleModelViewModel>(); 
+                cfg.CreateMap<PagedList<VehicleModel>, PagedList<VehicleModelViewModel>>();
+
+            })).AsSelf().SingleInstance();
+
+            builder.Register(c =>
+            {
+                //This resolves a new context that can be used later.
+                var context = c.Resolve<IComponentContext>();
+                var config = context.Resolve<MapperConfiguration>();
+                return config.CreateMapper(context.Resolve);
+            })
+            .As<IMapper>()
+            .InstancePerLifetimeScope();
+
 
             builder.RegisterType<VehicleMakeService>().As<IVehicleMakeService>();
             builder.RegisterType<VehicleModelService>().As<IVehicleModelService>();
+           
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
