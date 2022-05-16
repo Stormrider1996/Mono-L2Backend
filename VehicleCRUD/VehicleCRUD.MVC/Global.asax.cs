@@ -27,15 +27,17 @@ namespace VehicleCRUD.MVC
             builder.RegisterType<VehiclesDbEntities>().AsSelf();
             builder.RegisterType<VehicleMake>().AsSelf();
             builder.RegisterType<VehicleModel>().AsSelf();
-           
+            builder.RegisterType<VehicleMakeViewModel>().AsSelf();
+
+
 
             builder.Register(context => new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap <VehicleMake, VehicleMakeViewModel>();
+                cfg.CreateMap<VehicleMake, VehicleMakeViewModel>();
                 cfg.CreateMap<VehicleModel, VehicleModelViewModel>(); 
-                cfg.CreateMap<PagedList<VehicleModel>, PagedList<VehicleModelViewModel>>();
-
+                cfg.CreateMap<IEnumerable<VehicleMake>, IEnumerable<VehicleMakeViewModel>>();
             })).AsSelf().SingleInstance();
+
 
             builder.Register(c =>
             {

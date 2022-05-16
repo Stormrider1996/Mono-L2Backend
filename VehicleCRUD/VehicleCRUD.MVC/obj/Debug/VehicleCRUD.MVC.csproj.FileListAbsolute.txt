@@ -227,3 +227,12 @@ C:\Users\franj\Documents\Mono-L2Backend\VehicleCRUD\VehicleCRUD.MVC\bin\System.V
 C:\Users\franj\Documents\Mono-L2Backend\VehicleCRUD\VehicleCRUD.MVC\bin\AutoMapper.pdb
 C:\Users\franj\Documents\Mono-L2Backend\VehicleCRUD\VehicleCRUD.MVC\bin\AutoMapper.xml
 C:\Users\franj\Documents\Mono-L2Backend\VehicleCRUD\VehicleCRUD.MVC\bin\System.ValueTuple.xml
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\AutoMapper.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\AutoMapper.EF6.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\DelegateDecompiler.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\DelegateDecompiler.EntityFramework.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\Mono.Reflection.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\System.ValueTuple.dll
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\AutoMapper.pdb
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\AutoMapper.xml
+C:\Users\franj\Desktop\Mono\VehicleCRUD\VehicleCRUD.MVC\bin\System.ValueTuple.xml

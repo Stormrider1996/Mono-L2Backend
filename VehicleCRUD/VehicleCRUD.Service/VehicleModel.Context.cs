@@ -16,7 +16,7 @@ namespace VehicleCRUD.Service
     public partial class VehiclesDbEntities : DbContext, IVehiclesDbEntities
     {
         public VehiclesDbEntities()
-            : base("name=franjolaptop.VehicleDb")
+            : base("name=VehiclesDbEntities")
         {
         }
 

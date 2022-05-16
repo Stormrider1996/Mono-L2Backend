@@ -65,7 +65,7 @@ namespace VehicleCRUD.Service
             return Context.VehicleMakes.Any(e => e.Id == id);
         }
 
-        public IPagedList SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page)
+        public IPagedList<VehicleMake> SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page)
         {
             var vehicleMakes = from v in Context.VehicleMakes select v;
             

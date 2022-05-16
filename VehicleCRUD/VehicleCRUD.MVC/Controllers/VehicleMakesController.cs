@@ -19,12 +19,12 @@ namespace VehicleCRUD.MVC.Controllers
     public class VehicleMakesController : Controller
     {
         private readonly IVehicleMakeService VehicleMakeService;
-        private readonly IMapper _mapper;
+        private readonly IMapper Mapper;
         
         public VehicleMakesController(IVehicleMakeService vehicleMakeService, IMapper mapper)
         {
             VehicleMakeService = vehicleMakeService;  
-            _mapper = mapper;
+            Mapper = mapper;
             
         }
         
@@ -160,8 +160,10 @@ namespace VehicleCRUD.MVC.Controllers
     }
     static class Extensions
     {
+        public static IMapper Mapper { get; set; }
         public static IPagedList<TDestination> ToMappedPagedList<TSource, TDestination>(this IPagedList<TSource> list)
         {
+            
             IEnumerable<TDestination> sourceList = Mapper.Map<IEnumerable<TSource>, IEnumerable<TDestination>>(list);
             IPagedList<TDestination> pagedResult = new StaticPagedList<TDestination>(sourceList, list.GetMetaData());
             return pagedResult;

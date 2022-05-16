@@ -14,6 +14,6 @@ namespace VehicleCRUD.Service
         Task InsertVehicleMakeAsync(VehicleMake make);
         Task UpdateVehicleMakeAsync(VehicleMake make);
         bool VehicleMakeExists(Guid id);
-        IPagedList SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page);
+        IPagedList<VehicleMake> SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page);
     }
 }
