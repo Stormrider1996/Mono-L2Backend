@@ -68,8 +68,8 @@ namespace VehicleCRUD.Service
         public IPagedList<VehicleModel> VehicleModelFind(string sortOrder, string searchString, string currentFilter, int? page)
         {
             var vehicleModels = from v in Context.VehicleModels select v;
-            Filtering name = new Filtering();
-            name.ModelName = vehicleModels.Where(v => v.Name.Contains(searchString));
+            Filtering make = new Filtering();
+            make.ModelMake = vehicleModels.Where(v => v.VehicleMake.Name.Contains(searchString));
             if (searchString != null)
             {
                 page = 1;
@@ -81,7 +81,7 @@ namespace VehicleCRUD.Service
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                vehicleModels = name.ModelName;
+                vehicleModels = make.ModelMake;
             }
             Sorting asc = new Sorting();
             Sorting desc = new Sorting();
