@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using PagedList;
+using VehicleCRUD.Service.Sorting__Filtering__Paging_classes;
 
 namespace VehicleCRUD.Service
 {
@@ -65,10 +66,11 @@ namespace VehicleCRUD.Service
             return Context.VehicleMakes.Any(e => e.Id == id);
         }
 
-        public IPagedList<VehicleMake> SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page)
+        public IPagedList<VehicleMake> VehicleMakeFind(string sortOrder, string searchString, string currentFilter, int? page)
         {
             var vehicleMakes = from v in Context.VehicleMakes select v;
-            
+            Filtering name = new Filtering();
+            name.MakeName = vehicleMakes.Where(v => v.Name.Contains(searchString));
             if (searchString != null)
             {
                 page = 1;
@@ -80,21 +82,25 @@ namespace VehicleCRUD.Service
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                vehicleMakes = vehicleMakes.Where(v => v.Name.Contains(searchString));
+                vehicleMakes = name.MakeName;
             }
-
+            Sorting asc = new Sorting();
+            Sorting desc = new Sorting();
+            asc.SortOrderMake = vehicleMakes.OrderBy(v => v.Name);
+            desc.SortOrderMake = vehicleMakes.OrderByDescending(v => v.Name);
             switch (sortOrder)
             {
                 case "name_desc":
-                    vehicleMakes = vehicleMakes.OrderByDescending(v => v.Name);
+                    vehicleMakes = desc.SortOrderMake;
                     break;
                 default:
-                    vehicleMakes = vehicleMakes.OrderBy(v => v.Name);
+                    vehicleMakes = asc.SortOrderMake;
                     break;
             }
             
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
+            Paging paging = new Paging();
+            var pageSize = paging.PageSize;
+            var pageNumber = (page ?? paging.PageNumber);
             return vehicleMakes.ToPagedList(pageNumber, pageSize);
             
         }

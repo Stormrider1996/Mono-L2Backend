@@ -105,12 +105,18 @@
     <Compile Include="Interfaces for Efmodel\IVehicleMake.cs" />
     <Compile Include="Interfaces for Efmodel\IVehicleModel.cs" />
     <Compile Include="Interfaces for Efmodel\IVehiclesDbEntities.cs" />
-    <Compile Include="VehicleService classes\IVehicleMakeService.cs" />
-    <Compile Include="VehicleService classes\IVehicleModelService.cs" />
+    <Compile Include="Sorting, Filtering, Paging classes\Filtering.cs" />
+    <Compile Include="Sorting, Filtering, Paging interfaces\IFiltering.cs" />
+    <Compile Include="Sorting, Filtering, Paging interfaces\IPaging.cs" />
+    <Compile Include="Sorting, Filtering, Paging interfaces\ISorting.cs" />
+    <Compile Include="Sorting, Filtering, Paging classes\Paging.cs" />
+    <Compile Include="Sorting, Filtering, Paging classes\Sorting.cs" />
+    <Compile Include="VehicleService classes and interfaces\IVehicleMakeService.cs" />
+    <Compile Include="VehicleService classes and interfaces\IVehicleModelService.cs" />
     <Compile Include="VehicleMake.cs">
       <DependentUpon>VehicleModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="VehicleService classes\VehicleMakeService.cs" />
+    <Compile Include="VehicleService classes and interfaces\VehicleMakeService.cs" />
     <Compile Include="VehicleModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -124,7 +130,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VehicleModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="VehicleService classes\VehicleModelService.cs" />
+    <Compile Include="VehicleService classes and interfaces\VehicleModelService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,7 @@
       <LastGenOutput>VehicleModel1.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

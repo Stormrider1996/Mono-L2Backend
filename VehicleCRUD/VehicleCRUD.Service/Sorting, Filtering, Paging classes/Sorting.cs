@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace VehicleCRUD.Service.Sorting__Filtering__Paging_classes
+{
+    public class Sorting : ISorting
+    {
+        public IQueryable<VehicleMake> SortOrderMake { get; set; }
+        public IQueryable<VehicleModel> SortOrderModel { get; set; }
+
+    }
+}

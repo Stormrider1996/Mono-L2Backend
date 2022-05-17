@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VehicleCRUD.Service.Sorting__Filtering__Paging_classes;
 
 namespace VehicleCRUD.Service
 {
@@ -43,10 +44,12 @@ namespace VehicleCRUD.Service
         public async Task UpdateVehicleModelAsync(VehicleModel model)
         {
             var entity = await Context.VehicleModels.FindAsync(model.Id);
+             
             if (entity != null)
             {
                 entity.Name = model.Name;
                 entity.Abrv = model.Abrv;
+                entity.MakeId = model.MakeId;
                 Context.SaveChanges();
             }
 
@@ -62,10 +65,11 @@ namespace VehicleCRUD.Service
         {
             return Context.VehicleModels.Any(e => e.Id == id);
         }
-        public IPagedList SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page)
+        public IPagedList<VehicleModel> VehicleModelFind(string sortOrder, string searchString, string currentFilter, int? page)
         {
             var vehicleModels = from v in Context.VehicleModels select v;
-
+            Filtering name = new Filtering();
+            name.ModelName = vehicleModels.Where(v => v.Name.Contains(searchString));
             if (searchString != null)
             {
                 page = 1;
@@ -77,21 +81,25 @@ namespace VehicleCRUD.Service
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                vehicleModels = vehicleModels.Where(v => v.VehicleMake.Name.Contains(searchString));
+                vehicleModels = name.ModelName;
             }
-
+            Sorting asc = new Sorting();
+            Sorting desc = new Sorting();
+            asc.SortOrderModel = vehicleModels.OrderBy(v => v.Name);
+            desc.SortOrderModel = vehicleModels.OrderByDescending(v => v.Name);
             switch (sortOrder)
             {
                 case "name_desc":
-                    vehicleModels = vehicleModels.OrderByDescending(v => v.Name);
+                    vehicleModels = desc.SortOrderModel;
                     break;
                 default:
-                    vehicleModels = vehicleModels.OrderBy(v => v.Name);
+                    vehicleModels = asc.SortOrderModel;
                     break;
             }
 
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
+            Paging paging = new Paging();
+            var pageSize = paging.PageSize;
+            var pageNumber = (page ?? paging.PageNumber);
             return vehicleModels.ToPagedList(pageNumber, pageSize);
         }
 

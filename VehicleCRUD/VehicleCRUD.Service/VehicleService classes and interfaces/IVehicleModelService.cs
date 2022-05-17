@@ -14,6 +14,6 @@ namespace VehicleCRUD.Service
         Task InsertVehicleModelAsync(VehicleModel model);
         Task UpdateVehicleModelAsync(VehicleModel model);
         bool VehicleModelExists(Guid id);
-        IPagedList SortingFilteringPaging(string sortOrder, string searchString, string currentFilter, int? page);
+        IPagedList<VehicleModel> VehicleModelFind(string sortOrder, string searchString, string currentFilter, int? page);
     }
 }

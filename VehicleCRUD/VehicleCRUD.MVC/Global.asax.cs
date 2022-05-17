@@ -12,6 +12,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using VehicleCRUD.MVC.ViewModels;
 using VehicleCRUD.Service;
+using VehicleCRUD.Service.Sorting__Filtering__Paging_classes;
 
 namespace VehicleCRUD.MVC
 {
@@ -35,7 +36,7 @@ namespace VehicleCRUD.MVC
             {
                 cfg.CreateMap<VehicleMake, VehicleMakeViewModel>();
                 cfg.CreateMap<VehicleModel, VehicleModelViewModel>(); 
-                cfg.CreateMap<IEnumerable<VehicleMake>, IEnumerable<VehicleMakeViewModel>>();
+                
             })).AsSelf().SingleInstance();
 
 
@@ -48,11 +49,14 @@ namespace VehicleCRUD.MVC
             })
             .As<IMapper>()
             .InstancePerLifetimeScope();
-
+            
 
             builder.RegisterType<VehicleMakeService>().As<IVehicleMakeService>();
             builder.RegisterType<VehicleModelService>().As<IVehicleModelService>();
-           
+            builder.RegisterType<Sorting>().As<ISorting>();
+            builder.RegisterType<Filtering>().As<IFiltering>();
+            builder.RegisterType<Paging>().As<IPaging>();
+
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

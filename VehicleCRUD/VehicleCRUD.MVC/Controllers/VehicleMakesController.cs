@@ -12,7 +12,7 @@ using System.Data.Entity.Infrastructure;
 using PagedList;
 using AutoMapper;
 using VehicleCRUD.MVC.ViewModels;
-
+using VehicleCRUD.MVC.Extension_methods;
 
 namespace VehicleCRUD.MVC.Controllers
 {
@@ -31,12 +31,12 @@ namespace VehicleCRUD.MVC.Controllers
         // GET: VehicleMakes
         public ViewResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
-            var vehicleMakes = VehicleMakeService.SortingFilteringPaging(sortOrder, searchString, currentFilter, page);
+            var vehicleMakes = VehicleMakeService.VehicleMakeFind(sortOrder, searchString, currentFilter, page);
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.CurrentFilter = searchString;
 
-            var model = vehicleMakes.ToMappedPagedList<VehicleMake, VehicleMakeViewModel>();
+            var model = vehicleMakes.ToMappedPagedListMake<VehicleMake, VehicleMakeViewModel>();
 
             return View(model);
         }
@@ -76,8 +76,9 @@ namespace VehicleCRUD.MVC.Controllers
                await VehicleMakeService.InsertVehicleMakeAsync(vehicleMake);
                return RedirectToAction(nameof(Index));
             }
-
-            return View(vehicleMake);
+            
+            var model = Mapper.Map<VehicleMakeViewModel>(vehicleMake);
+            return View(model);
         }
 
         // GET: VehicleMakes/Edit/5
@@ -87,13 +88,13 @@ namespace VehicleCRUD.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VehicleMake vehicleMake = await VehicleMakeService.GetVehicleMakeByIdAsync((Guid)id);
-            
+            VehicleMake vehicleMake = await VehicleMakeService.GetVehicleMakeByIdAsync(id);
+            var model = Mapper.Map<VehicleMakeViewModel>(vehicleMake);
             if (vehicleMake == null)
             {
                 return HttpNotFound();
             }
-            return View(vehicleMake);
+            return View(model);
         }
 
         // POST: VehicleMakes/Edit/5
@@ -128,7 +129,8 @@ namespace VehicleCRUD.MVC.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            return View(vehicleMake);
+            var model = Mapper.Map<VehicleMakeViewModel>(vehicleMake);
+            return View(model);
         }
 
         // GET: VehicleMakes/Delete/5
@@ -144,7 +146,8 @@ namespace VehicleCRUD.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(vehicleMake);
+            var model = Mapper.Map<VehicleMakeViewModel>(vehicleMake);
+            return View(model);
         }
 
         // POST: VehicleMakes/Delete/5
@@ -158,16 +161,5 @@ namespace VehicleCRUD.MVC.Controllers
 
        
     }
-    static class Extensions
-    {
-        public static IMapper Mapper { get; set; }
-        public static IPagedList<TDestination> ToMappedPagedList<TSource, TDestination>(this IPagedList<TSource> list)
-        {
-            
-            IEnumerable<TDestination> sourceList = Mapper.Map<IEnumerable<TSource>, IEnumerable<TDestination>>(list);
-            IPagedList<TDestination> pagedResult = new StaticPagedList<TDestination>(sourceList, list.GetMetaData());
-            return pagedResult;
-
-        }
-    }
+    
 }

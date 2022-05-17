@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<VehicleCRUD.Service.VehicleMake>
+﻿@model PagedList.IPagedList<VehicleCRUD.MVC.ViewModels.VehicleMakeViewModel>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
@@ -24,7 +24,8 @@
             @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Abrv)
+            
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
         </th>
         <th></th>
     </tr>

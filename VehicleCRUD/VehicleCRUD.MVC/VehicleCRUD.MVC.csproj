@@ -182,6 +182,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VehicleMakesController.cs" />
     <Compile Include="Controllers\VehicleModelsController.cs" />
+    <Compile Include="Extension methods\Extensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
